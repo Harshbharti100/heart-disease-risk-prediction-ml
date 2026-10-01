@@ -1,0 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>HeartGuard AI | Risk Prediction</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef4ff 0%,
+                    #f8fbff 50%,
+                    #eef2ff 100%
+                );
+
+            color: #172033;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =========================================
+           TOP NAVIGATION
+        ========================================= */
+
+        .navbar {
+
+            height: 72px;
+
+            background: rgba(255,255,255,0.92);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid #e5eaf2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 5%;
+
+        }
+
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .brand-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            box-shadow:
+                0 5px 15px
+                rgba(37,99,235,0.25);
+
+        }
+
+
+        .brand-text h3 {
+
+            font-size: 17px;
+
+            color: #111827;
+
+        }
+
+
+        .brand-text span {
+
+            display: block;
+
+            font-size: 11px;
+
+            color: #64748b;
+
+            margin-top: 2px;
+
+        }
+
+
+        .status {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 12px;
+
+            color: #475569;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            padding: 8px 12px;
+
+            border-radius: 20px;
+
+        }
+
+
+        .status-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            background: #22c55e;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(34,197,94,0.12);
+
+        }
+
+
+        /* =========================================
+           MAIN LAYOUT
+        ========================================= */
+
+        .page {
+
+            max-width: 1250px;
+
+            margin: 35px auto;
+
+            padding: 0 22px;
+
+            display: grid;
+
+            grid-template-columns: 320px 1fr;
+
+            gap: 25px;
+
+            align-items: start;
+
+        }
+
+
+        /* =========================================
+           LEFT INFORMATION PANEL
+        ========================================= */
+
+        .info-panel {
+
+            background:
+                linear-gradient(
+                    160deg,
+                    #111827,
+                    #1e3a8a
+                );
+
+            color: white;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            position: sticky;
+
+            top: 25px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 45px
+                rgba(30,64,175,0.18);
+
+        }
+
+
+        .info-panel::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+
+            height: 180px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(96,165,250,0.12);
+
+            top: -70px;
+
+            right: -60px;
+
+        }
+
+
+        .ai-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            background:
+                rgba(255,255,255,0.1);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.16);
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .info-panel h1 {
+
+            font-size: 30px;
+
+            line-height: 1.15;
+
+            margin-bottom: 14px;
+
+        }
+
+
+        .info-panel > p {
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .feature {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .feature-icon {
+
+            width: 35px;
+
+            height: 35px;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.1);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 15px;
+
+        }
+
+
+        .feature h4 {
+
+            font-size: 13px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .feature p {
+
+            color: #aebbd0;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .model-info {
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+        }
+
+
+        .model-info-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            font-size: 11px;
+
+        }
+
+
+        .model-info-row span:first-child {
+
+            color: #94a3b8;
+
+        }
+
+
+        .model-info-row span:last-child {
+
+            color: #e2e8f0;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =========================================
+           MAIN FORM CARD
+        ========================================= */
+
+        .form-card {
+
+            background: rgba(255,255,255,0.95);
+
+            border:
+                1px solid #e5eaf2;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 15px 45px
+                rgba(15,23,42,0.07);
+
+            overflow: hidden;
+
+        }
+
+
+        .form-header {
+
+            padding: 27px 32px;
+
+            border-bottom:
+                1px solid #edf0f5;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+        }
+
+
+        .form-header h2 {
+
+            font-size: 20px;
+
+            color: #111827;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .form-header p {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+        }
+
+
+        .input-count {
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+        }
+
+
+        .form-body {
+
+            padding: 30px 32px;
+
+        }
+
+
+        /* =========================================
+           SECTIONS
+        ========================================= */
+
+        .section {
+
+            margin-bottom: 34px;
+
+        }
+
+
+        .section-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .section-number {
+
+            width: 28px;
+
+            height: 28px;
+
+            background: #eff6ff;
+
+            color: #2563eb;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .section-title h3 {
+
+            font-size: 15px;
+
+            color: #1e293b;
+
+        }
+
+
+        .section-title span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 19px;
+
+        }
+
+
+        /* =========================================
+           FORM FIELDS
+        ========================================= */
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .field label {
+
+            font-size: 12px;
+
+            font-weight: 650;
+
+            color: #334155;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .field label span {
+
+            color: #94a3b8;
+
+            font-weight: 400;
+
+            margin-left: 4px;
+
+        }
+
+
+        input,
+        select {
+
+            width: 100%;
+
+            height: 45px;
+
+            padding: 0 12px;
+
+            border:
+                1px solid #d7dee9;
+
+            border-radius: 9px;
+
+            background: #fff;
+
+            color: #334155;
+
+            font-size: 13px;
+
+            outline: none;
+
+            transition:
+                border 0.2s,
+                box-shadow 0.2s,
+                background 0.2s;
+
+        }
+
+
+        input:hover,
+        select:hover {
+
+            border-color: #b7c2d2;
+
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(59,130,246,0.10);
+
+            background: #fff;
+
+        }
+
+
+        input::placeholder {
+
+            color: #a8b1bf;
+
+        }
+
+
+        select {
+
+            cursor: pointer;
+
+        }
+
+
+        .help {
+
+            font-size: 10px;
+
+            color: #94a3b8;
+
+            margin-top: 5px;
+
+            line-height: 1.35;
+
+        }
+
+
+        /* =========================================
+           ACTION AREA
+        ========================================= */
+
+        .action-area {
+
+            border-top:
+                1px solid #edf0f5;
+
+            padding-top: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+        }
+
+
+        .action-note {
+
+            font-size: 11px;
+
+            color: #94a3b8;
+
+            line-height: 1.5;
+
+            max-width: 330px;
+
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        button {
+
+            height: 46px;
+
+            padding: 0 22px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+
+            font-weight: 650;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .predict-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            color: white;
+
+            box-shadow:
+                0 7px 18px
+                rgba(37,99,235,0.20);
+
+        }
+
+
+        .predict-btn:hover {
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 22px
+                rgba(37,99,235,0.25);
+
+        }
+
+
+        .clear-btn {
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+        }
+
+
+        .clear-btn:hover {
+
+            background: #e2e8f0;
+
+        }
+
+
+        /* =========================================
+           RESULT
+        ========================================= */
+
+        .result {
+
+            margin:
+                0 32px 30px;
+
+            border-radius: 15px;
+
+            padding: 24px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+        }
+
+
+        .result.high {
+
+            background: #fff1f2;
+
+            border:
+                1px solid #fecdd3;
+
+        }
+
+
+        .result.low {
+
+            background: #ecfdf5;
+
+            border:
+                1px solid #bbf7d0;
+
+        }
+
+
+        .result-icon {
+
+            width: 48px;
+
+            height: 48px;
+
+            flex-shrink: 0;
+
+            border-radius: 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+        }
+
+
+        .result.high .result-icon {
+
+            background: #ffe4e6;
+
+            color: #e11d48;
+
+        }
+
+
+        .result.low .result-icon {
+
+            background: #d1fae5;
+
+            color: #059669;
+
+        }
+
+
+        .result-content {
+
+            flex: 1;
+
+        }
+
+
+        .result-label {
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            color: #64748b;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .result h2 {
+
+            font-size: 21px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .result.high h2 {
+
+            color: #be123c;
+
+        }
+
+
+        .result.low h2 {
+
+            color: #047857;
+
+        }
+
+
+        .result p {
+
+            font-size: 12px;
+
+            color: #64748b;
+
+        }
+
+
+        /* =========================================
+           ERROR
+        ========================================= */
+
+        .error {
+
+            margin:
+                0 32px 30px;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            background: #fff1f2;
+
+            border:
+                1px solid #fecdd3;
+
+            color: #be123c;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================================
+           DISCLAIMER
+        ========================================= */
+
+        .disclaimer {
+
+            margin:
+                0 32px 30px;
+
+            padding: 13px 15px;
+
+            border-radius: 9px;
+
+            background: #f8fafc;
+
+            border:
+                1px solid #e2e8f0;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+            text-align: center;
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            padding:
+                0 0 30px;
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 950px) {
+
+            .page {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .info-panel {
+
+                position: relative;
+
+                top: 0;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 20px;
+
+            }
+
+
+            .status {
+
+                display: none;
+
+            }
+
+
+            .page {
+
+                margin-top: 20px;
+
+                padding: 0 12px;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-header {
+
+                padding: 22px;
+
+            }
+
+
+            .form-body {
+
+                padding: 22px;
+
+            }
+
+
+            .action-area {
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+            }
+
+
+            .action-note {
+
+                max-width: none;
+
+            }
+
+
+            .buttons {
+
+                width: 100%;
+
+            }
+
+
+            button {
+
+                flex: 1;
+
+            }
+
+
+            .result,
+            .error,
+            .disclaimer {
+
+                margin-left: 22px;
+
+                margin-right: 22px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            ♥
+        </div>
+
+        <div class="brand-text">
+
+            <h3>
+                HeartGuard AI
+            </h3>
+
+            <span>
+                Machine Learning Prediction System
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="status">
+
+        <div class="status-dot"></div>
+
+        Model Online
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<div class="page">
+
+
+    <!-- =================================================
+         INFORMATION PANEL
+    ================================================== -->
+
+    <aside class="info-panel">
+
+
+        <div class="ai-badge">
+
+            ✦ AI-Powered Analysis
+
+        </div>
+
+
+        <h1>
+            Heart Disease<br>
+            Risk Assessment
+        </h1>
+
+
+        <p>
+
+            Enter the patient's clinical information
+            to generate a machine-learning based
+            risk classification.
+
+        </p>
+
+
+        <!-- FEATURE 1 -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <h4>
+                    SVM Classification
+                </h4>
+
+                <p>
+                    Your trained Support Vector Machine
+                    model processes the submitted features.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEATURE 2 -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ↗
+            </div>
+
+            <div>
+
+                <h4>
+                    Standardized Inputs
+                </h4>
+
+                <p>
+                    Inputs are transformed using the
+                    saved training scaler before prediction.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FEATURE 3 -->
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                13
+            </div>
+
+            <div>
+
+                <h4>
+                    13 Model Features
+                </h4>
+
+                <p>
+                    The form uses the same feature set
+                    used during model training.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MODEL INFORMATION -->
+
+        <div class="model-info">
+
+            <div class="model-info-row">
+
+                <span>
+                    Algorithm
+                </span>
+
+                <span>
+                    SVM
+                </span>
+
+            </div>
+
+
+            <div class="model-info-row">
+
+                <span>
+                    Input Features
+                </span>
+
+                <span>
+                    13
+                </span>
+
+            </div>
+
+
+            <div class="model-info-row">
+
+                <span>
+                    Output
+                </span>
+
+                <span>
+                    Class 0 / Class 1
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =================================================
+         FORM CARD
+    ================================================== -->
+
+    <main class="form-card">
+
+
+        <div class="form-header">
+
+            <div>
+
+                <h2>
+                    Patient Assessment
+                </h2>
+
+                <p>
+                    Complete all required fields to generate a prediction.
+                </p>
+
+            </div>
+
+
+            <div class="input-count">
+
+                13 INPUTS
+
+            </div>
+
+        </div>
+
+
+        <div class="form-body">
+
+
+            <form
+                action="/predict"
+                method="POST"
+            >
+
+
+                <!-- =========================================
+                     SECTION 1
+                ========================================== -->
+
+                <div class="section">
+
+
+                    <div class="section-title">
+
+                        <div class="section-number">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Patient Profile
+                            </h3>
+
+                            <span>
+                                Basic demographic information
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- AGE -->
+
+                        <div class="field">
+
+                            <label for="age">
+                                Age
+                                <span>(years)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="age"
+                                name="age"
+                                min="29"
+                                max="77"
+                                placeholder="29 – 77"
+                                required
+                            >
+
+                            <div class="help">
+                                Training-data range: 29–77
+                            </div>
+
+                        </div>
+
+
+                        <!-- SEX -->
+
+                        <div class="field">
+
+                            <label for="sex">
+                                Sex
+                            </label>
+
+                            <select
+                                id="sex"
+                                name="sex"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0 or 1
+                            </div>
+
+                        </div>
+
+
+                        <!-- CP -->
+
+                        <div class="field">
+
+                            <label for="cp">
+                                Chest Pain Type
+                                <span>(cp)</span>
+                            </label>
+
+                            <select
+                                id="cp"
+                                name="cp"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select type
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                                <option value="3">
+                                    3
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0–3
+                            </div>
+
+                        </div>
+
+
+                        <!-- FBS -->
+
+                        <div class="field">
+
+                            <label for="fbs">
+                                Fasting Blood Sugar
+                                <span>(fbs)</span>
+                            </label>
+
+                            <select
+                                id="fbs"
+                                name="fbs"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0 or 1
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     SECTION 2
+                ========================================== -->
+
+                <div class="section">
+
+
+                    <div class="section-title">
+
+                        <div class="section-number">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Clinical Measurements
+                            </h3>
+
+                            <span>
+                                Blood pressure, cholesterol and heart-rate measurements
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- TRESTBPS -->
+
+                        <div class="field">
+
+                            <label for="trestbps">
+                                Resting Blood Pressure
+                                <span>(trestbps)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="trestbps"
+                                name="trestbps"
+                                min="94"
+                                max="200"
+                                placeholder="94 – 200"
+                                required
+                            >
+
+                            <div class="help">
+                                Training-data range: 94–200
+                            </div>
+
+                        </div>
+
+
+                        <!-- CHOL -->
+
+                        <div class="field">
+
+                            <label for="chol">
+                                Cholesterol
+                                <span>(chol)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="chol"
+                                name="chol"
+                                min="126"
+                                max="564"
+                                placeholder="126 – 564"
+                                required
+                            >
+
+                            <div class="help">
+                                Training-data range: 126–564
+                            </div>
+
+                        </div>
+
+
+                        <!-- THALACH -->
+
+                        <div class="field">
+
+                            <label for="thalach">
+                                Maximum Heart Rate
+                                <span>(thalach)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="thalach"
+                                name="thalach"
+                                min="71"
+                                max="202"
+                                placeholder="71 – 202"
+                                required
+                            >
+
+                            <div class="help">
+                                Training-data range: 71–202
+                            </div>
+
+                        </div>
+
+
+                        <!-- OLDPEAK -->
+
+                        <div class="field">
+
+                            <label for="oldpeak">
+                                ST Depression
+                                <span>(oldpeak)</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="oldpeak"
+                                name="oldpeak"
+                                min="0"
+                                max="6.2"
+                                step="0.1"
+                                placeholder="0 – 6.2"
+                                required
+                            >
+
+                            <div class="help">
+                                Training-data range: 0–6.2
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     SECTION 3
+                ========================================== -->
+
+                <div class="section">
+
+
+                    <div class="section-title">
+
+                        <div class="section-number">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Diagnostic Indicators
+                            </h3>
+
+                            <span>
+                                ECG, exercise and vessel-related model features
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-grid">
+
+
+                        <!-- RESTECG -->
+
+                        <div class="field">
+
+                            <label for="restecg">
+                                Resting ECG
+                                <span>(restecg)</span>
+                            </label>
+
+                            <select
+                                id="restecg"
+                                name="restecg"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0–2
+                            </div>
+
+                        </div>
+
+
+                        <!-- EXANG -->
+
+                        <div class="field">
+
+                            <label for="exang">
+                                Exercise-Induced Angina
+                                <span>(exang)</span>
+                            </label>
+
+                            <select
+                                id="exang"
+                                name="exang"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0 or 1
+                            </div>
+
+                        </div>
+
+
+                        <!-- SLOPE -->
+
+                        <div class="field">
+
+                            <label for="slope">
+                                ST Segment Slope
+                                <span>(slope)</span>
+                            </label>
+
+                            <select
+                                id="slope"
+                                name="slope"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0–2
+                            </div>
+
+                        </div>
+
+
+                        <!-- CA -->
+
+                        <div class="field">
+
+                            <label for="ca">
+                                Major Vessels
+                                <span>(ca)</span>
+                            </label>
+
+                            <select
+                                id="ca"
+                                name="ca"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                                <option value="3">
+                                    3
+                                </option>
+
+                                <option value="4">
+                                    4
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0–4
+                            </div>
+
+                        </div>
+
+
+                        <!-- THAL -->
+
+                        <div class="field">
+
+                            <label for="thal">
+                                Thal
+                                <span>(thal)</span>
+                            </label>
+
+                            <select
+                                id="thal"
+                                name="thal"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select value
+                                </option>
+
+                                <option value="0">
+                                    0
+                                </option>
+
+                                <option value="1">
+                                    1
+                                </option>
+
+                                <option value="2">
+                                    2
+                                </option>
+
+                                <option value="3">
+                                    3
+                                </option>
+
+                            </select>
+
+                            <div class="help">
+                                Model-coded value: 0–3
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     ACTIONS
+                ========================================== -->
+
+                <div class="action-area">
+
+
+                    <div class="action-note">
+
+                        All 13 fields are required.
+                        Values are processed using the
+                        same scaler used during model training.
+
+                    </div>
+
+
+                    <div class="buttons">
+
+
+                        <button
+                            type="reset"
+                            class="clear-btn"
+                        >
+                            Clear
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="predict-btn"
+                        >
+                            Predict Risk →
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+        <!-- ===============================================
+             ERROR MESSAGE
+        ================================================ -->
+
+        {% if error %}
+
+        <div class="error">
+
+            <strong>Prediction Error:</strong>
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ===============================================
+             RESULT
+        ================================================ -->
+
+        {% if prediction %}
+
+        <div class="result {{ result_type }}">
+
+
+            <div class="result-icon">
+
+                {% if result_type == "high" %}
+                    !
+                {% else %}
+                    ✓
+                {% endif %}
+
+            </div>
+
+
+            <div class="result-content">
+
+                <div class="result-label">
+                    Model Prediction
+                </div>
+
+                <h2>
+                    {{ prediction }}
+                </h2>
+
+                <p>
+                    {{ message }}
+                </p>
+
+            </div>
+
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- ===============================================
+             DISCLAIMER
+        ================================================ -->
+
+        <div class="disclaimer">
+
+            This application is a machine-learning project
+            intended for educational and demonstration purposes.
+            It is not a medical diagnostic tool and should not
+            replace professional medical evaluation.
+
+        </div>
+
+
+    </main>
+
+
+</div>
+
+
+<footer>
+
+    HeartGuard AI • SVM Machine Learning Model • Flask Deployment
+
+</footer>
+
+
+</body>
+
+</html>
